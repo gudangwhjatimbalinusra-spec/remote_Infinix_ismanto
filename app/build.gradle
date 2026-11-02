@@ -1,7 +1,7 @@
-plugins {
-    id 'com.android.application'
-}
 
+plugins {
+    id 'com.android.application' version '8.2.2'
+}
 android {
     namespace 'com.sacoku.smartremote'
     compileSdk 34
