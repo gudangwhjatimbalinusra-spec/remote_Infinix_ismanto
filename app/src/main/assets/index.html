@@ -620,23 +620,32 @@
     }
 
     function checkNativeBridge() {
-      const hasBridge = !!(
-        (window.Android && typeof window.Android.transmitIR === 'function') ||
-        (window.ir && typeof window.ir.transmit === 'function') ||
-        (window.ConsumerIrManager && typeof window.ConsumerIrManager.transmit === 'function')
-      );
       const badge = document.getElementById('infinix-badge');
       const statusText = document.getElementById('bridge-status-text');
 
-      if (hasBridge) {
-        badge.textContent = 'INFINIX IR: NATIVE CONNECTED';
-        badge.className = 'text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
-        statusText.textContent = 'AKTIF: ConsumerIrManager Terhubung ke Lampu IR Infinix Note 60 Pro!';
-        statusText.className = 'text-emerald-400';
+      if (window.Android && typeof window.Android.getIrStatus === 'function') {
+        try {
+          const result = window.Android.getIrStatus();
+          if (result && result.startsWith('READY:')) {
+            badge.textContent = 'IR HARDWARE: TERDETEKSI';
+            badge.className = 'text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+            statusText.textContent = result + ' Belum menguji pancaran atau respons AC.';
+            statusText.className = 'text-emerald-400';
+          } else {
+            badge.textContent = 'IR HARDWARE: BERMASALAH';
+            badge.className = 'text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/40';
+            statusText.textContent = result || 'Status IR tidak dapat dibaca.';
+            statusText.className = 'text-red-300';
+          }
+        } catch (err) {
+          badge.textContent = 'IR STATUS: ERROR';
+          statusText.textContent = 'Gagal membaca status IR: ' + err.message;
+          statusText.className = 'text-red-300';
+        }
       } else {
-        badge.textContent = 'INFINIX IR (WEBVIEW MODE)';
+        badge.textContent = 'IR BRIDGE: TIDAK TERHUBUNG';
         badge.className = 'text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40';
-        statusText.textContent = 'WebView Terdeteksi: Butuh Native Bridge APK agar lampu IR Infinix menyala.';
+        statusText.textContent = 'Bridge Android tidak ditemukan. Pastikan APK terbaru terpasang.';
         statusText.className = 'text-amber-300';
       }
     }
@@ -936,23 +945,43 @@
 
       document.getElementById('pulse-count-label').textContent = `${dynamicPulses.length} Pulsa @ 38kHz`;
 
-      // Tembakkan ke semua kemungkinan Native Bridge Android ConsumerIrManager
-      try {
-        // 1. Bridge Android JavaScriptInterface (Android Studio / Sketchware)
-        if (window.Android && typeof window.Android.transmitIR === 'function') {
-          window.Android.transmitIR(38000, dynamicPulses.join(','));
-        }
-        // 2. Bridge Cordova / Capacitor Plugin IR
-        else if (window.ir && typeof window.ir.transmit === 'function') {
-          window.ir.transmit(38000, dynamicPulses);
-        }
-        // 3. Bridge Direct ConsumerIrManager
-        else if (window.ConsumerIrManager && typeof window.ConsumerIrManager.transmit === 'function') {
-          window.ConsumerIrManager.transmit(38000, dynamicPulses);
-        }
-      } catch (err) {}
+      // Kirim melalui JavaScriptInterface dan tampilkan hasil yang dikembalikan Java.
+      const logOutput = document.getElementById('log-output');
+      const statusText = document.getElementById('bridge-status-text');
+      const badge = document.getElementById('infinix-badge');
 
-      document.getElementById('log-output').textContent = `[${m.proto}] ${commandName}`;
+      if (state.protocol !== 'IR') {
+        logOutput.textContent = 'Mode BLE dipilih; belum ada pengiriman IR.';
+        return;
+      }
+
+      if (!window.Android || typeof window.Android.transmitIR !== 'function') {
+        logOutput.textContent = 'GAGAL: Native IR bridge tidak terhubung.';
+        statusText.textContent = 'Tidak ada perintah yang dikirim. Periksa APK dan JavaScript bridge.';
+        statusText.className = 'text-red-300';
+        badge.textContent = 'IR BRIDGE: ERROR';
+        return;
+      }
+
+      try {
+        const result = window.Android.transmitIR(38000, dynamicPulses.join(','));
+        logOutput.textContent = result || 'Android tidak mengembalikan status.';
+        if (result && result.startsWith('OK:')) {
+          statusText.textContent = result;
+          statusText.className = 'text-emerald-400';
+          badge.textContent = 'PERINTAH DITERIMA ANDROID';
+        } else {
+          statusText.textContent = result || 'Pengiriman gagal tanpa detail.';
+          statusText.className = 'text-red-300';
+          badge.textContent = 'PENGIRIMAN IR GAGAL';
+        }
+      } catch (err) {
+        logOutput.textContent = 'ERROR: ' + (err.message || String(err));
+        statusText.textContent = 'Kesalahan saat memanggil Android.transmitIR().';
+        statusText.className = 'text-red-300';
+        badge.textContent = 'PENGIRIMAN IR GAGAL';
+      }
+
       document.getElementById('hex-output').textContent = hexCode;
     }
 
