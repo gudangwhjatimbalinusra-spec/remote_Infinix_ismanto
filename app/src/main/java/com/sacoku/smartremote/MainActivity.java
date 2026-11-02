@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private WebView webView;
@@ -37,16 +36,16 @@ public class MainActivity extends Activity {
         @JavascriptInterface
         public String getIrStatus() {
             if (irManager == null) {
-                return "ERROR: Layanan ConsumerIrManager tidak tersedia di Android.";
+                return "ERROR: Layanan ConsumerIrManager tidak tersedia.";
             }
 
             try {
                 if (!irManager.hasIrEmitter()) {
-                    return "ERROR: Android tidak mendeteksi pemancar IR pada perangkat ini.";
+                    return "ERROR: Android tidak mendeteksi pemancar IR.";
                 }
-                return "READY: Android mendeteksi dukungan pemancar IR.";
+                return "READY: Android mendeteksi dukungan pemancar IR. Pancaran fisik dan respons AC belum teruji.";
             } catch (Exception e) {
-                return "ERROR: Gagal memeriksa IR: " + safeMessage(e);
+                return "ERROR: Pemeriksaan IR gagal: " + safeMessage(e);
             }
         }
 
@@ -58,23 +57,26 @@ public class MainActivity extends Activity {
 
             try {
                 if (!irManager.hasIrEmitter()) {
-                    return "ERROR: Pemancar IR tidak terdeteksi oleh Android.";
+                    return "ERROR: Pemancar IR tidak terdeteksi Android.";
                 }
 
                 if (frequency < 1 || frequency > 1000000) {
-                    return "ERROR: Frekuensi IR tidak valid: " + frequency;
+                    return "ERROR: Frekuensi tidak valid: " + frequency;
                 }
-
                 if (patternStr == null || patternStr.trim().isEmpty()) {
-                    return "ERROR: Data pulsa IR kosong.";
+                    return "ERROR: Pola pulsa kosong.";
                 }
 
                 String[] parts = patternStr.split(",");
-                if (parts.length < 2 || parts.length % 2 != 0) {
-                    return "ERROR: Pola pulsa harus berisi pasangan mark/space.";
+                if (parts.length < 2) {
+                    return "ERROR: Pola pulsa terlalu pendek.";
                 }
 
-                int[] pattern = new int[parts.length];
+                // Data harus berupa durasi positif. Jika jumlahnya ganjil,
+                // tambahkan jeda akhir (space/off) agar pasangan mark/space lengkap.
+                int extra = parts.length % 2;
+                int[] pattern = new int[parts.length + extra];
+
                 for (int i = 0; i < parts.length; i++) {
                     pattern[i] = Integer.parseInt(parts[i].trim());
                     if (pattern[i] <= 0) {
@@ -82,16 +84,24 @@ public class MainActivity extends Activity {
                     }
                 }
 
+                if (extra == 1) {
+                    pattern[pattern.length - 1] = 10000;
+                }
+
                 irManager.transmit(frequency, pattern);
 
-                // Android API tidak memberikan konfirmasi optik bahwa LED IR benar-benar
-                // memancarkan sinyal atau bahwa AC menerima perintah.
-                return "OK: Perintah transmit() diterima Android (" +
-                        frequency + " Hz, " + pattern.length + " durasi). Respons AC belum terkonfirmasi.";
+                String note = extra == 1
+                        ? " Jeda akhir 10000 us ditambahkan otomatis."
+                        : "";
+
+                return "OK: Android menerima pemanggilan transmit() pada " +
+                        frequency + " Hz dengan " + pattern.length +
+                        " durasi." + note +
+                        " Ini belum membuktikan LED IR memancar atau AC menerima perintah.";
             } catch (NumberFormatException e) {
-                return "ERROR: Data pulsa berisi angka yang tidak valid.";
+                return "ERROR: Pola pulsa berisi angka yang tidak valid.";
             } catch (Exception e) {
-                return "ERROR: Pengiriman IR gagal: " + safeMessage(e);
+                return "ERROR: Android gagal memproses IR: " + safeMessage(e);
             }
         }
 
