@@ -16,10 +16,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Setup Android SDK Environment
+        run: |
+          mkdir -p $HOME/android-sdk
+          export ANDROID_HOME=$HOME/android-sdk
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          sdkmanager --version || true
 
-      - name: Build Debug APK
+      - name: Build Debug APK with Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
           arguments: assembleDebug
