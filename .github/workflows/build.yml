@@ -16,8 +16,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build Debug APK with Gradle Direct
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          arguments: assembleDebug
-          gradle-version: wrapper
+      - name: Install Gradle
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gradle
+
+      - name: Build APK Direct
+        run: gradle assembleDebug
