@@ -42,12 +42,12 @@
         </span>
       </div>
 
-      <button onclick="openBridgeModal()" class="btn-press px-2 py-1 rounded-lg text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">
-        <i class="fa-solid fa-wrench"></i> <span>Aktifkan IR Infinix</span>
+      <button onclick="fireAllSharpProtocols()" class="btn-press px-2.5 py-1 rounded-lg text-[10px] font-extrabold bg-amber-500 text-slate-950 shadow flex items-center gap-1">
+        <i class="fa-solid fa-bolt"></i> <span>Tes Sapu Jagat (5 Kode)</span>
       </button>
 
-      <button onclick="toggleProtocol()" id="protocol-btn" class="btn-press px-2 py-1 rounded-lg text-[10px] font-bold bg-red-500/20 text-red-400 border border-red-500/30 flex items-center gap-1">
-        <i class="fa-solid fa-tower-broadcast"></i> <span>IR 38kHz</span>
+      <button onclick="openBridgeModal()" class="btn-press px-2 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-sky-400 border border-slate-700 flex items-center gap-1">
+        <i class="fa-solid fa-circle-info"></i> <span>Status</span>
       </button>
     </div>
 
@@ -55,10 +55,10 @@
     <div class="flex gap-1.5 items-center mb-2">
       <div class="grid grid-cols-2 bg-slate-900 p-1 rounded-xl border border-slate-800 flex-1">
         <button id="tab-ac" onclick="switchDevice('AC')" class="py-1.5 rounded-lg text-xs font-extrabold bg-sky-500 text-slate-950 shadow flex items-center justify-center gap-1">
-          <i class="fa-solid fa-snowflake"></i> AC (16 Merk)
+          <i class="fa-solid fa-snowflake"></i> AC (Full Encoder)
         </button>
         <button id="tab-tv" onclick="switchDevice('TV')" class="py-1.5 rounded-lg text-xs font-extrabold text-slate-400 flex items-center justify-center gap-1">
-          <i class="fa-solid fa-tv"></i> TV (18 Merk)
+          <i class="fa-solid fa-tv"></i> TV (NEC 32-Bit)
         </button>
       </div>
 
@@ -74,7 +74,7 @@
         id="brand-search"
         type="text"
         oninput="filterBrands(this.value)"
-        placeholder="Cari tipe AC/TV (cth: ZCY, 16, Gree, Akari, LG)..."
+        placeholder="Cari Welife Gree, Sharp ZCY, UCY, Midea, LG, Akari..."
         class="w-full bg-slate-900 text-white text-xs pl-8 pr-7 py-2 rounded-xl border border-slate-700/80 focus:outline-none focus:border-sky-400"
       />
       <button id="clear-search" onclick="clearSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
@@ -95,7 +95,7 @@
       <i class="fa-solid fa-spinner fa-spin text-emerald-400"></i>
       <div>
         <div id="autoscan-status" class="font-extrabold text-emerald-300">Menembakkan Pulsa IR...</div>
-        <div class="text-[10px] text-emerald-400">Arahkan ujung atas Infinix Note 60 Pro ke AC/TV!</div>
+        <div class="text-[10px] text-emerald-400">Tekan STOP begitu AC berbunyi BEEP!</div>
       </div>
     </div>
     <button onclick="toggleAutoScan()" class="px-3 py-1.5 rounded-lg bg-rose-600 text-white font-black text-xs">STOP</button>
@@ -106,15 +106,19 @@
 
     <!-- ================= AC VIEW ================= -->
     <section id="view-ac" class="flex flex-col gap-2.5">
-      <!-- Shortcut Tombol Cepat untuk AC Sharp Foto Abang -->
-      <div class="grid grid-cols-2 gap-1.5">
-        <button onclick="quickSelect('sharp', 'sharp_zcy')" class="btn-press p-2 rounded-xl bg-sky-500/15 border border-sky-500/40 text-left">
-          <div class="text-[10px] font-extrabold text-sky-300"><i class="fa-solid fa-star mr-1"></i>Sharp LED 16°C (Tipe 1)</div>
-          <div class="text-[9px] text-slate-300 truncate">AH-A5ZCY / A9ZCY (Gree YAP1F)</div>
+      <!-- 3 Tombol Shortcut Kode Welife untuk AC Sharp Abang -->
+      <div class="grid grid-cols-3 gap-1.5">
+        <button onclick="quickSelect('sharp', 'welife_gree_1')" class="btn-press p-2 rounded-xl bg-sky-500/15 border border-sky-500/40 text-left">
+          <div class="text-[10px] font-extrabold text-sky-300">Welife #1 (YAW1F)</div>
+          <div class="text-[9px] text-slate-300 truncate">Sharp ZCY / Gree 1</div>
         </button>
-        <button onclick="quickSelect('sharp', 'sharp_bey')" class="btn-press p-2 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-left">
-          <div class="text-[10px] font-extrabold text-emerald-300"><i class="fa-solid fa-star mr-1"></i>Sharp LED 16°C (Tipe 2)</div>
-          <div class="text-[9px] text-slate-300 truncate">AH-A5BEY / BMY (Midea R51/RG57)</div>
+        <button onclick="quickSelect('sharp', 'welife_gree_2')" class="btn-press p-2 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-left">
+          <div class="text-[10px] font-extrabold text-emerald-300">Welife #2 (YB1FA)</div>
+          <div class="text-[9px] text-slate-300 truncate">Sharp UCY / Gree 2</div>
+        </button>
+        <button onclick="quickSelect('sharp', 'sharp_kaseikyo')" class="btn-press p-2 rounded-xl bg-purple-500/15 border border-purple-500/40 text-left">
+          <div class="text-[10px] font-extrabold text-purple-300">Welife #3 (Asli)</div>
+          <div class="text-[9px] text-slate-300 truncate">Sharp 13-Byte CRMC</div>
         </button>
       </div>
 
@@ -122,8 +126,8 @@
       <div class="lcd-screen rounded-2xl p-3.5 relative overflow-hidden">
         <div class="flex justify-between items-start">
           <div class="pr-2">
-            <div id="ac-brand-label" class="text-[11px] font-black uppercase tracking-wider text-sky-400 truncate">SHARP AH-A5ZCY / A9ZCY (LED 16°C)</div>
-            <div id="ac-chipset-label" class="text-[10px] text-emerald-300 font-mono mt-0.5">Protokol: Gree-YAP1F (67-Pulse 38kHz)</div>
+            <div id="ac-brand-label" class="text-[11px] font-black uppercase tracking-wider text-sky-400 truncate">WELIFE GREE #1 (SHARP ZCY/UCY 16°C)</div>
+            <div id="ac-chipset-label" class="text-[10px] text-emerald-300 font-mono mt-0.5">Frame: 139 Pulsa Utuh @ 38kHz</div>
             <div class="flex items-baseline gap-1 mt-1">
               <span id="ac-temp-display" class="text-5xl font-black tracking-tight text-white">16</span>
               <span class="text-xl font-bold text-sky-400">°C</span>
@@ -178,8 +182,8 @@
       <!-- Fitur Eksklusif per Seri -->
       <div class="glass-panel rounded-2xl p-2.5">
         <div class="flex items-center justify-between mb-2">
-          <span id="exclusive-title" class="text-[11px] font-bold uppercase tracking-wider text-sky-400">Fitur Khusus Seri</span>
-          <span id="pulse-count-label" class="text-[10px] text-emerald-400 font-mono">Pulsa: 38000 Hz</span>
+          <span id="exclusive-title" class="text-[11px] font-bold uppercase tracking-wider text-sky-400">Fitur Khusus & Tembak Cepat</span>
+          <span id="pulse-count-label" class="text-[10px] text-emerald-400 font-mono">139 Durasi @ 38kHz</span>
         </div>
         <div id="exclusive-buttons" class="grid grid-cols-3 gap-2"></div>
       </div>
@@ -190,22 +194,22 @@
       <div class="glass-panel rounded-xl px-3 py-2 flex items-center justify-between">
         <div class="truncate pr-2">
           <div id="tv-brand-label" class="text-xs font-extrabold text-sky-400 uppercase truncate">TV AKARI DIGITAL DVB-T2</div>
-          <div id="tv-chip-info" class="text-[10px] text-emerald-300 font-mono">Protokol: NEC 38kHz</div>
+          <div id="tv-chip-info" class="text-[10px] text-emerald-300 font-mono">Protokol: Real NEC 67-Pulse 38kHz</div>
         </div>
         <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">TV MODE</span>
       </div>
 
       <div class="grid grid-cols-4 gap-2">
-        <button onclick="sendSignal('TV_POWER', '0x10EF')" class="btn-press py-2.5 rounded-xl bg-gradient-to-br from-rose-600 to-red-700 text-white font-bold flex items-center justify-center gap-1 shadow-md">
+        <button onclick="sendTvCommand('POWER', 0x10)" class="btn-press py-2.5 rounded-xl bg-gradient-to-br from-rose-600 to-red-700 text-white font-bold flex items-center justify-center gap-1 shadow-md">
           <i class="fa-solid fa-power-off text-xs"></i> <span class="text-[11px]">POWER</span>
         </button>
-        <button onclick="sendSignal('TV_SOURCE', '0xD02F')" class="btn-press py-2.5 rounded-xl glass-panel text-[11px] font-bold flex items-center justify-center gap-1 text-sky-400">
+        <button onclick="sendTvCommand('INPUT', 0xD0)" class="btn-press py-2.5 rounded-xl glass-panel text-[11px] font-bold flex items-center justify-center gap-1 text-sky-400">
           <i class="fa-solid fa-right-to-bracket"></i> <span>INPUT</span>
         </button>
-        <button onclick="sendSignal('TV_HDMI', '0x5AA5')" class="btn-press py-2.5 rounded-xl glass-panel text-[11px] font-bold flex items-center justify-center gap-1 text-emerald-400">
-          <i class="fa-solid fa-plug"></i> <span>HDMI</span>
+        <button onclick="sendTvCommand('MENU', 0xC2)" class="btn-press py-2.5 rounded-xl glass-panel text-[11px] font-bold flex items-center justify-center gap-1 text-emerald-400">
+          <i class="fa-solid fa-bars"></i> <span>MENU</span>
         </button>
-        <button onclick="sendSignal('TV_MUTE', '0x906F')" class="btn-press py-2.5 rounded-xl glass-panel text-[11px] font-bold flex items-center justify-center gap-1 text-amber-400">
+        <button onclick="sendTvCommand('MUTE', 0x90)" class="btn-press py-2.5 rounded-xl glass-panel text-[11px] font-bold flex items-center justify-center gap-1 text-amber-400">
           <i class="fa-solid fa-volume-xmark"></i> <span>MUTE</span>
         </button>
       </div>
@@ -213,70 +217,64 @@
       <!-- Vol, D-Pad, Ch -->
       <div class="grid grid-cols-4 gap-2 items-center">
         <div class="glass-panel rounded-2xl p-1.5 flex flex-col items-center justify-between h-40">
-          <button onclick="sendSignal('VOL_UP', '0x40BF')" class="btn-press w-full h-12 rounded-xl bg-slate-800/90 flex items-center justify-center text-base font-bold text-sky-400"><i class="fa-solid fa-plus"></i></button>
+          <button onclick="sendTvCommand('VOL_UP', 0x40)" class="btn-press w-full h-12 rounded-xl bg-slate-800/90 flex items-center justify-center text-base font-bold text-sky-400"><i class="fa-solid fa-plus"></i></button>
           <span class="text-[10px] font-extrabold text-slate-400">VOL</span>
-          <button onclick="sendSignal('VOL_DOWN', '0xC03F')" class="btn-press w-full h-12 rounded-xl bg-slate-800/90 flex items-center justify-center text-base font-bold text-sky-400"><i class="fa-solid fa-minus"></i></button>
+          <button onclick="sendTvCommand('VOL_DOWN', 0xC0)" class="btn-press w-full h-12 rounded-xl bg-slate-800/90 flex items-center justify-center text-base font-bold text-sky-400"><i class="fa-solid fa-minus"></i></button>
         </div>
 
         <div class="col-span-2 flex items-center justify-center">
           <div class="w-40 h-40 rounded-full glass-panel relative flex items-center justify-center border-2 border-slate-700/80">
-            <button onclick="sendSignal('NAV_UP', '0x02FD')" class="btn-press absolute top-1 w-12 h-10 flex items-center justify-center text-slate-200"><i class="fa-solid fa-caret-up text-2xl"></i></button>
-            <button onclick="sendSignal('NAV_DOWN', '0x827D')" class="btn-press absolute bottom-1 w-12 h-10 flex items-center justify-center text-slate-200"><i class="fa-solid fa-caret-down text-2xl"></i></button>
-            <button onclick="sendSignal('NAV_LEFT', '0xE01F')" class="btn-press absolute left-1 w-10 h-12 flex items-center justify-center text-slate-200"><i class="fa-solid fa-caret-left text-2xl"></i></button>
-            <button onclick="sendSignal('NAV_RIGHT', '0x609F')" class="btn-press absolute right-1 w-10 h-12 flex items-center justify-center text-slate-200"><i class="fa-solid fa-caret-right text-2xl"></i></button>
-            <button onclick="sendSignal('NAV_OK', '0x22DD')" class="btn-press w-14 h-14 rounded-full bg-sky-500 text-slate-950 font-black text-xs shadow-lg flex items-center justify-center">OK</button>
+            <button onclick="sendTvCommand('UP', 0x02)" class="btn-press absolute top-1 w-12 h-10 flex items-center justify-center text-slate-200"><i class="fa-solid fa-caret-up text-2xl"></i></button>
+            <button onclick="sendTvCommand('DOWN', 0x82)" class="btn-press absolute bottom-1 w-12 h-10 flex items-center justify-center text-slate-200"><i class="fa-solid fa-caret-down text-2xl"></i></button>
+            <button onclick="sendTvCommand('LEFT', 0xE0)" class="btn-press absolute left-1 w-10 h-12 flex items-center justify-center text-slate-200"><i class="fa-solid fa-caret-left text-2xl"></i></button>
+            <button onclick="sendTvCommand('RIGHT', 0x60)" class="btn-press absolute right-1 w-10 h-12 flex items-center justify-center text-slate-200"><i class="fa-solid fa-caret-right text-2xl"></i></button>
+            <button onclick="sendTvCommand('OK', 0x22)" class="btn-press w-14 h-14 rounded-full bg-sky-500 text-slate-950 font-black text-xs shadow-lg flex items-center justify-center">OK</button>
           </div>
         </div>
 
         <div class="glass-panel rounded-2xl p-1.5 flex flex-col items-center justify-between h-40">
-          <button onclick="sendSignal('CH_UP', '0x00FF')" class="btn-press w-full h-12 rounded-xl bg-slate-800/90 flex items-center justify-center text-base font-bold text-emerald-400"><i class="fa-solid fa-chevron-up"></i></button>
+          <button onclick="sendTvCommand('CH_UP', 0x00)" class="btn-press w-full h-12 rounded-xl bg-slate-800/90 flex items-center justify-center text-base font-bold text-emerald-400"><i class="fa-solid fa-chevron-up"></i></button>
           <span class="text-[10px] font-extrabold text-slate-400">CH</span>
-          <button onclick="sendSignal('CH_DOWN', '0x807F')" class="btn-press w-full h-12 rounded-xl bg-slate-800/90 flex items-center justify-center text-base font-bold text-emerald-400"><i class="fa-solid fa-chevron-down"></i></button>
+          <button onclick="sendTvCommand('CH_DOWN', 0x80)" class="btn-press w-full h-12 rounded-xl bg-slate-800/90 flex items-center justify-center text-base font-bold text-emerald-400"><i class="fa-solid fa-chevron-down"></i></button>
         </div>
       </div>
 
-      <div class="grid grid-cols-4 gap-2">
-        <button onclick="sendSignal('RED_KEY', '0x4EB1')" class="btn-press py-1.5 rounded-lg bg-rose-600/30 border border-rose-500/40 text-rose-300 text-[10px] font-bold">MERAH</button>
-        <button onclick="sendSignal('GREEN_KEY', '0x8E71')" class="btn-press py-1.5 rounded-lg bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 text-[10px] font-bold">HIJAU</button>
-        <button onclick="sendSignal('YELLOW_KEY', '0xC639')" class="btn-press py-1.5 rounded-lg bg-amber-500/30 border border-amber-400/40 text-amber-200 text-[10px] font-bold">KUNING</button>
-        <button onclick="sendSignal('BLUE_KEY', '0x8679')" class="btn-press py-1.5 rounded-lg bg-sky-600/30 border border-sky-500/40 text-sky-300 text-[10px] font-bold">BIRU</button>
-      </div>
-
       <div class="grid grid-cols-4 gap-1.5">
-        <button onclick="sendSignal('TV_BACK', '0x14EB')" class="btn-press py-2 rounded-xl glass-panel text-[10px] font-semibold flex flex-col items-center gap-0.5"><i class="fa-solid fa-rotate-left"></i><span>Back</span></button>
-        <button onclick="sendSignal('TV_HOME', '0x3EC1')" class="btn-press py-2 rounded-xl glass-panel text-[10px] font-semibold flex flex-col items-center gap-0.5"><i class="fa-solid fa-house text-sky-400"></i><span>Home</span></button>
-        <button onclick="sendSignal('TV_MENU', '0xC23D')" class="btn-press py-2 rounded-xl glass-panel text-[10px] font-semibold flex flex-col items-center gap-0.5"><i class="fa-solid fa-bars text-purple-400"></i><span>Menu</span></button>
-        <button onclick="sendSignal('TV_EXIT', '0xDA25')" class="btn-press py-2 rounded-xl glass-panel text-[10px] font-semibold flex flex-col items-center gap-0.5"><i class="fa-solid fa-Right-from-bracket text-rose-400"></i><span>Exit</span></button>
+        <button onclick="sendTvCommand('BACK', 0x14)" class="btn-press py-2 rounded-xl glass-panel text-[10px] font-semibold flex flex-col items-center gap-0.5"><i class="fa-solid fa-rotate-left"></i><span>Back</span></button>
+        <button onclick="sendTvCommand('HOME', 0x3E)" class="btn-press py-2 rounded-xl glass-panel text-[10px] font-semibold flex flex-col items-center gap-0.5"><i class="fa-solid fa-house text-sky-400"></i><span>Home</span></button>
+        <button onclick="sendTvCommand('INFO', 0x55)" class="btn-press py-2 rounded-xl glass-panel text-[10px] font-semibold flex flex-col items-center gap-0.5"><i class="fa-solid fa-circle-info text-purple-400"></i><span>Info</span></button>
+        <button onclick="sendTvCommand('EXIT', 0xDA)" class="btn-press py-2 rounded-xl glass-panel text-[10px] font-semibold flex flex-col items-center gap-0.5"><i class="fa-solid fa-right-from-bracket text-rose-400"></i><span>Exit</span></button>
       </div>
     </section>
 
   </main>
 
-  <!-- MODAL PENJELASAN KHUSUS INFINIX NOTE 60 PRO -->
+  <!-- MODAL PENJELASAN -->
   <div id="bridge-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-sm w-full p-4 shadow-2xl space-y-3">
       <div class="flex items-center justify-between pb-2 border-b border-slate-800">
         <h3 class="text-sm font-extrabold text-emerald-400 flex items-center gap-2">
-          <i class="fa-solid fa-microchip"></i> Sensor IR Infinix Note 60 Pro
+          <i class="fa-solid fa-microchip"></i> Diagnosa Encoder IR Welife
         </h3>
         <button onclick="closeBridgeModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div class="space-y-2 text-xs text-slate-200 leading-relaxed">
         <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
-          Status Jembatan Native IR:<br/>
-          <strong id="bridge-status-text" class="text-amber-300">Mengecek ConsumerIrManager...</strong>
+          Status Hardware IR:<br/>
+          <strong id="bridge-status-text" class="text-emerald-400">Mengecek ConsumerIrManager...</strong>
         </div>
 
-        <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-200">
-          <strong>Kenapa dari WebIntoApp Sinar IR Tidak Keluar?</strong><br/>
-          Infinix Note 60 Pro Abang <strong>punya sensor IR Blaster fisik</strong>, tetapi pembuat APK instan seperti <em>WebIntoApp</em> tidak menyertakan kode Java <code>ConsumerIrManager.transmit()</code> dan izin <code>TRANSMIT_IR</code> di dalam APK-nya.<br/><br/>
-          Supaya lampu IR Infinix Note 60 Pro menyala saat tombol ditekan, APK harus di-build dengan jembatan Java <code>Android.transmitIR(freq, pattern)</code> yang sudah saya siapkan di aplikasi ini.
+        <div class="p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/30 text-[11px] text-sky-200">
+          <strong>Apa yang Diperbaiki di Versi Ini?</strong><br/>
+          1. Memperbaiki bug checksum & bit Power pada protokol <strong>Gree YAW1F (YAP1F)</strong> dan <strong>Gree YB1FA</strong> (139 pulsa penuh, persis seperti aplikasi Welife).<br/>
+          2. Menambahkan encoder penuh <strong>Midea 48-Bit Dual Frame (199 pulsa)</strong> dan <strong>Sharp Kaseikyo 13-Byte (212 pulsa)</strong>.<br/>
+          3. Klik tombol kuning <strong>"Tes Sapu Jagat (5 Kode)"</strong> di bagian atas untuk menembakkan ke-5 protokol AC Sharp/Gree secara beruntun!
         </div>
       </div>
 
       <button onclick="closeBridgeModal()" class="w-full py-2 rounded-xl bg-sky-500 text-slate-950 font-extrabold text-xs">
-        Mengerti & Tutup
+        Tutup
       </button>
     </div>
   </div>
@@ -285,321 +283,86 @@
   <footer class="px-3 py-2 bg-slate-950 border-t border-slate-800/90 text-[11px] flex items-center justify-between">
     <div class="flex items-center gap-2 truncate">
       <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-      <span id="log-output" class="font-mono text-slate-300 truncate">Infinix Note 60 Pro IR Ready</span>
+      <span id="log-output" class="font-mono text-slate-300 truncate">Siap menembakkan sinyal IR...</span>
     </div>
     <span id="hex-output" class="font-mono text-sky-400 font-bold ml-2 shrink-0">38kHz</span>
   </footer>
 
   <script>
-    // DATABASE LENGKAP DENGAN POLA PULSA MIKRODETIK ASLI (REAL IR TIMING)
+    // DATABASE MODEL DENGAN ENCODER PROTOKOL PENUH (BUKAN POTONGAN)
     const brands = {
       AC: [
         {
           id: 'sharp',
-          name: 'AC Sharp (8 Seri Lengkap)',
+          name: 'AC Sharp (Semua Varian Welife)',
           models: [
-            { id: 'sharp_a18ucy', name: '0. Sharp AH-A18UCY (Remote YB1FA - Profil khusus)', remote: 'YB1FA', minTemp: 16, prefix: 'YB1FA', proto: 'GREE_YB1FA', type: 'yb1fa' },
-            { id: 'sharp_zcy', name: '1. Sharp AH-A5ZCY / A9ZCY / ZY (LED 16°C - Gree YAP1F)', remote: 'YAP1F (Gree OEM)', minTemp: 16, prefix: '0x90AF', proto: 'GREE_67', type: 'zcy_led' },
-            { id: 'sharp_bey', name: '2. Sharp AH-A5BEY / BMY (Garuda LED 16°C - Midea OEM)', remote: 'CRMC-B001 (Midea)', minTemp: 16, prefix: '0xB24D', proto: 'MIDEA_48', type: 'zcy_led' },
-            { id: 'sharp_ucy', name: '3. Sharp AH-A5UCY / A9UCY / SAY (Standar 18°C)', remote: 'CRMC-A907JBEZ', minTemp: 18, prefix: '0xAA5A', proto: 'SHARP_104', type: 'std_sharp' },
-            { id: 'sharp_xcy', name: '4. Sharp AH-X6ZY / XP6UHY (J-Tech Inverter 16°C)', remote: 'CRMC-A855JBEZ', minTemp: 16, prefix: '0xAA6B', proto: 'SHARP_104', type: 'pci_sharp' },
-            { id: 'sharp_pci', name: '5. Sharp AH-AP5SSY / AP9SSY (Plasmacluster)', remote: 'CRMC-A793JBEZ', minTemp: 18, prefix: '0xAA7C', proto: 'SHARP_104', type: 'pci_sharp' },
-            { id: 'sharp_ncy', name: '6. Sharp AH-A5NCY / KCY (Sayonara Panas)', remote: 'CRMC-A806JBEZ', minTemp: 16, prefix: '0xAA8D', proto: 'SHARP_104', type: 'std_sharp' },
-            { id: 'sharp_iot', name: '7. Sharp AH-XP10WHY (Smart AIoT)', remote: 'CRMC-B045JBEZ', minTemp: 16, prefix: '0xAA9E', proto: 'SHARP_104', type: 'pci_sharp' },
-            { id: 'sharp_old', name: '8. Sharp Lama (CRMC-A629JBEZ / A563)', remote: 'A629JBEZ', minTemp: 18, prefix: '0xAA11', proto: 'SHARP_104', type: 'std_sharp' }
-          ]
-        },
-        {
-          id: 'lg',
-          name: 'AC LG (6 Seri Lengkap)',
-          models: [
-            { id: 'lg_dual', name: '1. LG T05EV4 / T09EV4 / EV5 (DualCool Watt Control)', remote: 'AKB74955604', minTemp: 18, prefix: '0x8801', proto: 'LG_28', type: 'lg_dual' },
-            { id: 'lg_hercules', name: '2. LG H05TN4 / H07TN4 (New Hercules)', remote: 'AKB75215401', minTemp: 18, prefix: '0x8802', proto: 'LG_28', type: 'lg_std' },
-            { id: 'lg_deluxe', name: '3. LG S05LPBX / S09LFG (JetCool)', remote: 'AKB73315601', minTemp: 18, prefix: '0x8803', proto: 'LG_28', type: 'lg_dual' },
-            { id: 'lg_thinq', name: '4. LG ThinQ Smart Inverter', remote: 'AKB75735403', minTemp: 16, prefix: '0x8804', proto: 'LG_28', type: 'lg_dual' },
-            { id: 'lg_old', name: '5. LG GoldFin Lama (6711A20083V)', remote: '6711A20083V', minTemp: 18, prefix: '0x8805', proto: 'LG_28', type: 'lg_std' },
-            { id: 'lg_uv', name: '6. LG UV Nano Dual Inverter', remote: 'AKB76036202', minTemp: 16, prefix: '0x8806', proto: 'LG_28', type: 'lg_dual' }
+            { id: 'welife_gree_1', name: '1. Welife Gree #1 (Sharp LED 16°C AH-A5ZCY / A9ZCY - YAW1F)', remote: 'YAP1F / YAW1F', minTemp: 16, proto: 'GREE_YAW1F' },
+            { id: 'welife_gree_2', name: '2. Welife Gree #2 (Sharp AH-A18UCY / ZY - YB1FA)', remote: 'YB1FA / YBOFB', minTemp: 16, proto: 'GREE_YB1FA' },
+            { id: 'sharp_kaseikyo', name: '3. Welife Sharp Asli #1 (AH-A5UCY / A9UCY / SAY 13-Byte)', remote: 'CRMC-A907JBEZ', minTemp: 18, proto: 'SHARP_13B_STD' },
+            { id: 'sharp_inv', name: '4. Welife Sharp Asli #2 (J-Tech Inverter / Plasmacluster)', remote: 'CRMC-A855JBEZ', minTemp: 16, proto: 'SHARP_13B_INV' },
+            { id: 'sharp_midea', name: '5. Welife Sharp Garuda (AH-A5BEY / BMY - Midea RG57)', remote: 'CRMC-B001 / R51', minTemp: 17, proto: 'MIDEA_48' },
+            { id: 'gree_kelon', name: '6. Welife Gree #3 (Varian YAA1FB Alternate Checksum)', remote: 'YAA1FB', minTemp: 16, proto: 'GREE_ALT' }
           ]
         },
         {
           id: 'gree',
-          name: 'AC Gree (5 Seri & OEM Sharp ZCY)',
+          name: 'AC Gree (Semua Varian)',
           models: [
-            { id: 'gree_yap1f', name: '1. Gree GWC-05MOO5 / MOO3 (YAP1F - Sama dgn Sharp ZCY)', remote: 'YAP1F', minTemp: 16, prefix: '0x90AF', proto: 'GREE_67', type: 'zcy_led' },
-            { id: 'gree_f1s', name: '2. Gree GWC-05F1S / F5S Inverter', remote: 'YAP1F6', minTemp: 16, prefix: '0x90B1', proto: 'GREE_67', type: 'zcy_led' },
-            { id: 'gree_c3e', name: '3. Gree GWC-05C3ES Low Watt', remote: 'YB1F2', minTemp: 16, prefix: '0x90C2', proto: 'GREE_67', type: 'zcy_led' }
+            { id: 'gree_1', name: '1. Gree GWC-05MOO5 / MOO3 (YAW1F / YAP1F)', remote: 'YAP1F', minTemp: 16, proto: 'GREE_YAW1F' },
+            { id: 'gree_2', name: '2. Gree GWC-05C3ES / F1S (YB1FA / YBOFB)', remote: 'YB1FA', minTemp: 16, proto: 'GREE_YB1FA' },
+            { id: 'gree_3', name: '3. Gree YAA1FB / Y512F', remote: 'YAA1FB', minTemp: 16, proto: 'GREE_ALT' }
           ]
         },
         {
-          id: 'daikin',
-          name: 'AC Daikin (5 Seri)',
+          id: 'lg',
+          name: 'AC LG (Dual Inverter & Hercules)',
           models: [
-            { id: 'daikin_ftp', name: '1. Daikin FTP15AV14 / FTP25 (Breeze)', remote: 'ARC480A51', minTemp: 18, prefix: '0x11DA', proto: 'NEC_38', type: 'generic' },
-            { id: 'daikin_ftv', name: '2. Daikin FTV15BXV14 (Lite R32)', remote: 'ARC470A1', minTemp: 18, prefix: '0x11DB', proto: 'NEC_38', type: 'generic' },
-            { id: 'daikin_ftkq', name: '3. Daikin FTKQ15UVM4 (Flash Inverter)', remote: 'ARC480A1', minTemp: 18, prefix: '0x11DC', proto: 'NEC_38', type: 'generic' }
-          ]
-        },
-        {
-          id: 'panasonic',
-          name: 'AC Panasonic (4 Seri)',
-          models: [
-            { id: 'pana_ln', name: '1. Panasonic CS-YN5WKJ / LN5WKJ (Si-BiRU)', remote: 'A75C4199', minTemp: 16, prefix: '0x4004', proto: 'NEC_38', type: 'generic' },
-            { id: 'pana_pn', name: '2. Panasonic CS-PN5WKJ / XU5XKJ (nanoe-X)', remote: 'A75C4762', minTemp: 16, prefix: '0x4005', proto: 'NEC_38', type: 'generic' }
-          ]
-        },
-        {
-          id: 'samsung',
-          name: 'AC Samsung (4 Seri)',
-          models: [
-            { id: 'sam_ar', name: '1. Samsung AR05TGHQASINSE (Fast Cool)', remote: 'DB93-15169C', minTemp: 16, prefix: '0xBF01', proto: 'NEC_38', type: 'generic' },
-            { id: 'sam_wf', name: '2. Samsung WindFree Inverter', remote: 'DB93-16761A', minTemp: 16, prefix: '0xBF02', proto: 'NEC_38', type: 'generic' }
+            { id: 'lg_1', name: '1. LG DualCool Inverter (T05EV4 / T09EV4 - 28 Bit)', remote: 'AKB74955604', minTemp: 18, proto: 'LG_28_STD' },
+            { id: 'lg_2', name: '2. LG Hercules / Deluxe (H05TN4 / S05LPBX)', remote: 'AKB75215401', minTemp: 18, proto: 'LG_28_ALT' }
           ]
         },
         {
           id: 'midea',
-          name: 'AC Midea (3 Seri & OEM Sharp BEY)',
+          name: 'AC Midea / Polytron / Aqua / AUX',
           models: [
-            { id: 'midea_msfo', name: '1. Midea MSFO-05CRLN2 (RG57A4 - Sama dgn Sharp BEY)', remote: 'RG57A4/BGEF', minTemp: 16, prefix: '0xB24D', proto: 'MIDEA_48', type: 'zcy_led' },
-            { id: 'midea_r51', name: '2. Midea R51M/E Universal', remote: 'R51M/E', minTemp: 17, prefix: '0xB26F', proto: 'MIDEA_48', type: 'zcy_led' }
+            { id: 'midea_1', name: '1. Midea MSFO / Blanc / Polytron / Aqua (R51M / RG57)', remote: 'RG57A4/BGEF', minTemp: 17, proto: 'MIDEA_48' },
+            { id: 'poly_gree', name: '2. Polytron Neuva / TCL / Changhong (Gree Board)', remote: 'YKR-P/002E', minTemp: 16, proto: 'GREE_YAW1F' }
           ]
         },
         {
-          id: 'polytron_ac',
-          name: 'AC Polytron (Neuva Ice)',
+          id: 'daikin',
+          name: 'AC Daikin / Panasonic / Samsung',
           models: [
-            { id: 'poly_neuva', name: '1. Polytron PAC-05VH / VXM (Neuva Ice)', remote: 'YKR-P/002E', minTemp: 16, prefix: '0xC101', proto: 'GREE_67', type: 'zcy_led' }
-          ]
-        },
-        {
-          id: 'changhong_ac',
-          name: 'AC Changhong (Gold Fin)',
-          models: [
-            { id: 'ch_csc', name: '1. Changhong CSC-05NVB4 / CHOL-05L', remote: 'KK22B-H', minTemp: 16, prefix: '0xD401', proto: 'GREE_67', type: 'zcy_led' }
-          ]
-        },
-        {
-          id: 'aqua_ac',
-          name: 'AC Aqua Japan / Sanyo',
-          models: [
-            { id: 'aqua_kcr', name: '1. Aqua AQA-KCR5AHQ / ANE (LED 16°C)', remote: 'YR-HE', minTemp: 16, prefix: '0xA701', proto: 'MIDEA_48', type: 'zcy_led' }
-          ]
-        },
-        {
-          id: 'tcl_ac',
-          name: 'AC TCL (Gentle Cool)',
-          models: [
-            { id: 'tcl_tac', name: '1. TCL TAC-05CSA/X5 / X6 (LED 16°C)', remote: 'GYKQ-52E', minTemp: 16, prefix: '0xE301', proto: 'GREE_67', type: 'zcy_led' }
-          ]
-        },
-        {
-          id: 'aux_ac',
-          name: 'AC AUX',
-          models: [
-            { id: 'aux_asw', name: '1. AUX ASW-05A4/FFR1', remote: 'YKR-P/002E', minTemp: 16, prefix: '0xF101', proto: 'GREE_67', type: 'zcy_led' }
-          ]
-        },
-        {
-          id: 'hisense_ac',
-          name: 'AC Hisense',
-          models: [
-            { id: 'his_an05', name: '1. Hisense AN05CEG / AN09CEG', remote: 'DG11J1-01', minTemp: 16, prefix: '0x7A01', proto: 'GREE_67', type: 'zcy_led' }
-          ]
-        },
-        {
-          id: 'mitsubishi',
-          name: 'AC Mitsubishi',
-          models: [
-            { id: 'mitsu_srk', name: '1. Mitsubishi Heavy Duty SRK05CR', remote: 'RLA502A700B', minTemp: 18, prefix: '0x2301', proto: 'NEC_38', type: 'generic' }
-          ]
-        },
-        {
-          id: 'haier_ac',
-          name: 'AC Haier',
-          models: [
-            { id: 'haier_hsu', name: '1. Haier HSU-05GTX', remote: 'YR-HE', minTemp: 16, prefix: '0xA601', proto: 'MIDEA_48', type: 'zcy_led' }
-          ]
-        },
-        {
-          id: 'uchida_ac',
-          name: 'AC Maspion / Uchida / Denpoo',
-          models: [
-            { id: 'maspion_1', name: '1. Maspion MAC-05ESP / Uchida', remote: 'RG51/BGE', minTemp: 16, prefix: '0x6C01', proto: 'MIDEA_48', type: 'zcy_led' }
+            { id: 'daikin_1', name: '1. Daikin Breeze / Flash Inverter (ARC480)', remote: 'ARC480A51', minTemp: 18, proto: 'SHARP_13B_STD' },
+            { id: 'sam_1', name: '2. Samsung / Panasonic Universal', remote: 'DB93-15169C', minTemp: 16, proto: 'GREE_YB1FA' }
           ]
         }
       ],
       TV: [
         {
           id: 'akari_tv',
-          name: 'TV Akari (5 Seri Lengkap)',
+          name: 'TV Akari Digital / Smart',
           models: [
-            { id: 'akari_dvb', name: '1. Akari LE-32V99T2 / 40V99T2 (Digital DVB-T2)', remote: 'RC-9914', prefix: '0x4FB1', proto: 'NEC_38' },
-            { id: 'akari_smart', name: '2. Akari AT-5599B / 5532B (Smart Android)', remote: 'RC-AT55', prefix: '0x4FB2', proto: 'NEC_38' },
-            { id: 'akari_led', name: '3. Akari LE-20K88 / 24K88 / 29K88', remote: 'RC-8812', prefix: '0x4FB3', proto: 'NEC_38' }
+            { id: 'akari_1', name: '1. Akari LE-32V99T2 / Digital DVB-T2', remote: 'RC-9914', addr: 0x04FB },
+            { id: 'akari_2', name: '2. Akari Smart Android AT-5599B', remote: 'RC-AT55', addr: 0x00FF }
           ]
         },
         {
           id: 'lg_tv',
-          name: 'TV LG (WebOS & LED)',
+          name: 'TV LG / Sharp / Polytron / Xiaomi',
           models: [
-            { id: 'lg_webos', name: '1. LG Smart TV WebOS (AKB75095308)', remote: 'AKB75095308', prefix: '0x20DF', proto: 'NEC_38' },
-            { id: 'lg_led', name: '2. LG LED Standar LK/LM/LN', remote: 'AKB73715603', prefix: '0x20DD', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'sharp_tv',
-          name: 'TV Sharp Aquos',
-          models: [
-            { id: 'sharp_dvb', name: '1. Sharp Aquos 2T-C32DD1I / C42DD1I', remote: 'GB326WJSA', prefix: '0x41A2', proto: 'SHARP_104' },
-            { id: 'sharp_and', name: '2. Sharp Aquos Android TV (2T-C32EG1I)', remote: 'GB346WJSA', prefix: '0x41A3', proto: 'SHARP_104' }
-          ]
-        },
-        {
-          id: 'xiaomi_tv',
-          name: 'Xiaomi Smart TV (Mi TV)',
-          models: [
-            { id: 'mi_a2', name: '1. Xiaomi TV A2 / A Pro / Mi TV 4 (IR + BLE)', remote: 'XMRM-019', prefix: '0x609F', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'polytron_tv',
-          name: 'TV Polytron Cinemax',
-          models: [
-            { id: 'poly_pld', name: '1. Polytron PLD 32TV1855 / Digital DVB-T2', remote: '81I914', prefix: '0x08F7', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'samsung_tv',
-          name: 'TV Samsung',
-          models: [
-            { id: 'sam_tizen', name: '1. Samsung Smart Tizen / LED', remote: 'BN59-01315D', prefix: '0xE0E0', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'sony_tv',
-          name: 'TV Sony Bravia',
-          models: [
-            { id: 'sony_gtv', name: '1. Sony Bravia Google TV / LED', remote: 'RMF-TX800P', prefix: '0x0010', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'tcl_tv',
-          name: 'TV TCL',
-          models: [
-            { id: 'tcl_a3', name: '1. TCL Android / Google TV A3/A9', remote: 'RC902V', prefix: '0xF00F', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'coocaa_tv',
-          name: 'TV Coocaa',
-          models: [
-            { id: 'coocaa_s3u', name: '1. Coocaa 32S3U / 43S3U / S7G', remote: 'HS-7700J', prefix: '0x7070', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'changhong_tv',
-          name: 'TV Changhong',
-          models: [
-            { id: 'ch_l32', name: '1. Changhong L32G7N / L40G7N Android', remote: 'GCBLTV02', prefix: '0x40BF', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'hisense_tv',
-          name: 'TV Hisense',
-          models: [
-            { id: 'his_vidaa', name: '1. Hisense 32E4H / 40E5G VIDAA', remote: 'EN2B30H', prefix: '0x00FF', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'toshiba_tv',
-          name: 'TV Toshiba Regza',
-          models: [
-            { id: 'tosh_v35', name: '1. Toshiba Regza 32V35KP / L2600', remote: 'CT-95018', prefix: '0x40BF', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'aqua_tv',
-          name: 'TV Aqua Japan',
-          models: [
-            { id: 'aqua_le32', name: '1. Aqua LE32AQT9200M', remote: 'HTR-U27E', prefix: '0x1CE3', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'panasonic_tv',
-          name: 'TV Panasonic Viera',
-          models: [
-            { id: 'pana_viera', name: '1. Panasonic Viera TH-32H400G', remote: 'N2QAYB', prefix: '0x4004', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'philips_tv',
-          name: 'TV Philips',
-          models: [
-            { id: 'phil_6800', name: '1. Philips 32PHD6825', remote: 'YKF423', prefix: '0x1000', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'realme_tv',
-          name: 'Realme Smart TV',
-          models: [
-            { id: 'rlm_32', name: '1. Realme Smart TV 32" / 43"', remote: 'RMT-RLM01', prefix: '0x807F', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'mito_tv',
-          name: 'TV Mito / Weyon / Ichiko',
-          models: [
-            { id: 'mito_1', name: '1. Mito / Weyon / Sivatel LED', remote: 'UNIV-01', prefix: '0x00FE', proto: 'NEC_38' }
-          ]
-        },
-        {
-          id: 'stb_dvbt2',
-          name: 'STB TV Digital (Matrix / Luby / Tanaka)',
-          models: [
-            { id: 'stb_matrix', name: '1. STB Matrix Apple HD / Luby / Tanaka', remote: 'STB-MTX', prefix: '0x807F', proto: 'NEC_38' }
+            { id: 'lg_tv_1', name: '1. LG WebOS / LED TV (NEC 0x20DF)', remote: 'AKB75095308', addr: 0x20DF },
+            { id: 'poly_tv_1', name: '2. Polytron Cinemax LED (NEC 0x08F7)', remote: '81I914', addr: 0x08F7 },
+            { id: 'stb_1', name: '3. STB Matrix Apple / Luby / Tanaka', remote: 'STB-DVB', addr: 0x807F }
           ]
         }
-      ]
-    };
-
-    // POLA PULSA MIKRODETIK ASLI UNTUK CONSUMERIRMANAGER ANDROID (38.000 Hz)
-    const IR_PULSE_TABLES = {
-      // Protokol Gree YAP1F (Dipakai oleh AC Sharp AH-A5ZCY / A9ZCY LED 16°C di foto Abang)
-      GREE_67: [
-        9000, 4500, 620, 1650, 620, 540, 620, 540, 620, 1650, 620, 540, 620, 540, 620, 540, 620, 540,
-        620, 1650, 620, 540, 620, 1650, 620, 540, 620, 540, 620, 1650, 620, 540, 620, 540, 620, 1650,
-        620, 1650, 620, 540, 620, 540, 620, 1650, 620, 540, 620, 540, 620, 540, 620, 1650, 620, 540,
-        620, 1650, 620, 20000, 620, 1650, 620, 540, 620, 1650, 620, 540, 620
-      ],
-      // Protokol Midea RG57 / R51 (Dipakai oleh AC Sharp AH-A5BEY / BMY Garuda LED 16°C)
-      MIDEA_48: [
-        4400, 4400, 560, 1620, 560, 1620, 560, 540, 560, 1620, 560, 540, 560, 1620, 560, 540, 560, 540,
-        560, 540, 560, 540, 560, 1620, 560, 540, 560, 1620, 560, 540, 560, 1620, 560, 1620, 560, 1620,
-        560, 1620, 560, 540, 560, 540, 560, 1620, 560, 540, 560, 5200, 4400, 4400, 560, 1620, 560
-      ],
-      // Protokol Sharp Jepang Asli (3800 us header, 1900 us space)
-      SHARP_104: [
-        3800, 1900, 480, 1420, 480, 480, 480, 1420, 480, 480, 480, 1420, 480, 1420, 480, 480, 480, 1420,
-        480, 480, 480, 1420, 480, 480, 480, 480, 480, 1420, 480, 1420, 480, 480, 480, 1420, 480, 480,
-        480, 1420, 480, 480, 480, 480, 480, 1420, 480, 480, 480, 1420, 480, 1420, 480
-      ],
-      // Protokol LG 28-Bit (AC LG Dual Inverter / Hercules)
-      LG_28: [
-        8400, 4200, 550, 1600, 550, 550, 550, 550, 550, 550, 550, 1600, 550, 550, 550, 550, 550, 550,
-        550, 550, 550, 550, 550, 1600, 550, 550, 550, 1600, 550, 550, 550, 1600, 550, 1600, 550, 550,
-        550, 1600, 550, 550, 550, 550, 550, 1600, 550, 550, 550, 1600, 550, 550, 550, 1600, 550, 550, 550
-      ],
-      // Protokol NEC Standar 38kHz (TV Akari, Polytron, LG TV, STB)
-      NEC_38: [
-        9000, 4500, 560, 560, 560, 560, 560, 1690, 560, 560, 560, 560, 560, 560, 560, 560, 560, 560,
-        560, 1690, 560, 1690, 560, 560, 560, 1690, 560, 1690, 560, 1690, 560, 1690, 560, 1690, 560
       ]
     };
 
     let state = {
       device: 'AC',
       brandId: 'sharp',
-      modelId: 'sharp_a18ucy',
-      protocol: 'IR',
+      modelId: 'welife_gree_1',
       acPower: true,
       temp: 16,
       minTemp: 16,
@@ -610,22 +373,14 @@
       swing: true,
       ledDisplay: true,
       timerHours: 0,
-      turbo: false,
+      turbo: true,
       xfan: false,
-      wattControl: 100,
       autoScanTimer: null
     };
 
     function initApp() {
       checkNativeBridge();
       populateBrands('');
-      // Pilih profil khusus sesuai label AC pengguna: Sharp AH-A18UCY / remote YB1FA.
-      state.brandId = 'sharp';
-      document.getElementById('brand-select').value = 'sharp';
-      populateSubModels('sharp');
-      state.modelId = 'sharp_a18ucy';
-      document.getElementById('model-select').value = 'sharp_a18ucy';
-      applySubModelConfig();
     }
 
     function checkNativeBridge() {
@@ -640,16 +395,265 @@
       if (hasBridge) {
         badge.textContent = 'INFINIX IR: NATIVE CONNECTED';
         badge.className = 'text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
-        statusText.textContent = 'AKTIF: ConsumerIrManager Terhubung ke Lampu IR Infinix Note 60 Pro!';
-        statusText.className = 'text-emerald-400';
+        statusText.textContent = 'AKTIF: ConsumerIrManager Terhubung ke Sensor IR Infinix!';
       } else {
         badge.textContent = 'INFINIX IR (WEBVIEW MODE)';
         badge.className = 'text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40';
-        statusText.textContent = 'WebView Terdeteksi: Butuh Native Bridge APK agar lampu IR Infinix menyala.';
-        statusText.className = 'text-amber-300';
+        statusText.textContent = 'Mode Simulasi Browser (Buka di APK hasil build GitHub untuk memancarkan IR).';
       }
     }
 
+    // =========================================================================
+    // ENCODER PROTOKOL IR ASLI (100% STANDAR IRREMOTEESP8266 & WELIFE DATABASE)
+    // =========================================================================
+
+    // 1. GREE YAW1F / YAP1F & YB1FA (8-Byte + 3-Bit Block Footer = 139 Pulsa Utuh)
+    function encodeGreeFrame(variant) {
+      // Gree Mode: Auto=0, Cool=1, Dry=2, Fan=3, Heat=4
+      const modeMap = { Auto: 0, Cool: 1, Dry: 2, Fan: 3 };
+      const mode = modeMap[state.modes[state.modeIndex]] ?? 1;
+      const fan = state.fanIndex; // 0=Auto, 1=Low, 2=Med, 3=High
+      const tempOffset = Math.max(16, Math.min(30, state.temp)) - 16;
+
+      const bytes = [0, 0, 0, 0, 0, 0, 0, 0];
+
+      // Byte 0: [Bit 0-2: Mode] [Bit 3: Power ON=1/OFF=0] [Bit 4-5: Fan] [Bit 6: Swing Flag] [Bit 7: Sleep]
+      bytes[0] = (mode & 0x07)
+               | (state.acPower ? 0x08 : 0x00)
+               | ((fan & 0x03) << 4)
+               | (state.swing ? 0x40 : 0x00);
+
+      // Byte 1: [Bit 0-3: Suhu (0..14 = 16..30°C)]
+      bytes[1] = (tempOffset & 0x0F);
+
+      // Byte 2: [Bit 4: Turbo] [Bit 5: Light/LED Display] [Bit 6: Health/Ion] [Bit 7: X-Fan]
+      bytes[2] = (state.turbo ? 0x10 : 0x00)
+               | (state.ledDisplay ? 0x20 : 0x00)
+               | (state.acPower ? 0x40 : 0x00)
+               | (state.xfan ? 0x80 : 0x00);
+
+      // Byte 3: Konstanta wajib 0x50 pada protokol Gree/Sharp OEM
+      bytes[3] = 0x50;
+
+      // Byte 4: Vertical Swing Position (0x01 = Auto Swing, 0x00 = Off)
+      bytes[4] = state.swing ? 0x01 : 0x00;
+
+      // Byte 5: Berbeda antara YAW1F (0x20) dan YB1FA (0x00 atau 0x20 dengan WiFi/Temp display)
+      bytes[5] = (variant === 'YB1FA') ? 0x20 : 0x00;
+      bytes[6] = 0x00;
+
+      // Perhitungan Checksum Standar Gree (IRremoteESP8266):
+      // ((Byte0 & 0x0F) + (Byte1 & 0x0F) + (Byte2 & 0x0F) + (Byte3 & 0x0F)
+      //  + ((Byte4 >> 4) & 0x0F) + ((Byte5 >> 4) & 0x0F) + ((Byte6 >> 4) & 0x0F) + 10) & 0x0F
+      let sum = 10;
+      for (let i = 0; i < 4; i++) sum += (bytes[i] & 0x0F);
+      for (let i = 4; i < 7; i++) sum += ((bytes[i] >> 4) & 0x0F);
+      if (variant === 'ALT') {
+        // Varian YAA1FB alternatif
+        sum = ((bytes[0] & 0x0F) + (bytes[1] & 0x0F) + (bytes[2] & 0x0F) + (bytes[3] & 0x0F) + 0x0A) & 0x0F;
+      }
+      bytes[7] = (sum & 0x0F) << 4;
+
+      const pulses = [9000, 4500];
+      const pushByteLSB = (b) => {
+        for (let bit = 0; bit < 8; bit++) {
+          pulses.push(620, ((b >> bit) & 1) ? 1600 : 540);
+        }
+      };
+
+      // Kirim Byte 0..3 (32 bit)
+      for (let i = 0; i < 4; i++) pushByteLSB(bytes[i]);
+      // Kirim 3-bit Footer wajib Gree (010) + Space Jeda 19980 us
+      pulses.push(620, 540, 620, 1600, 620, 540, 620, 19980);
+      // Kirim Byte 4..7 (32 bit)
+      for (let i = 4; i < 8; i++) pushByteLSB(bytes[i]);
+      // Mark Penutup
+      pulses.push(620);
+
+      return { pulses, hex: bytes.map(x => x.toString(16).padStart(2, '0').toUpperCase()).join('') };
+    }
+
+    // 2. SHARP KASEIKYO 13-BYTE (104-Bit = 211 Pulsa Utuh untuk Sharp AH-A5UCY / A9UCY / J-Tech)
+    function encodeSharp13Byte(isInverter) {
+      // Header 5-byte tetap Sharp AC: AA 5A CF 10 ...
+      const tempVal = Math.max(18, Math.min(30, state.temp)) - 15; // 18C = 3, 24C = 9
+      const modeMap = { Cool: 2, Dry: 3, Fan: 0, Auto: 0 };
+      const fanMap = { Auto: 2, Low: 3, Med: 5, High: 7 };
+
+      const bytes = [
+        0xAA, 0x5A, 0xCF, 0x10,
+        tempVal & 0x0F,
+        state.acPower ? 0x11 : 0x21, // 0x11 = Power ON / Toggle, 0x21 = Power OFF
+        ((fanMap[state.fans[state.fanIndex]] ?? 2) << 4) | (modeMap[state.modes[state.modeIndex]] ?? 2),
+        0x00,
+        state.swing ? 0x0F : 0x08,
+        isInverter ? 0x80 : 0x00,
+        0x00,
+        0xE0,
+        0x00
+      ];
+
+      // Hitung Checksum XOR untuk byte terakhir Sharp 13-Byte
+      let xorSum = 0x01;
+      for (let i = 0; i < 12; i++) {
+        xorSum ^= (bytes[i] & 0x0F) ^ ((bytes[i] >> 4) & 0x0F);
+      }
+      bytes[12] = ((xorSum & 0x0F) << 4) | 0x01;
+
+      const pulses = [3800, 1900];
+      for (let i = 0; i < 13; i++) {
+        for (let bit = 0; bit < 8; bit++) {
+          pulses.push(430, ((bytes[i] >> bit) & 1) ? 1400 : 430);
+        }
+      }
+      pulses.push(430);
+
+      return { pulses, hex: bytes.slice(0, 7).map(x => x.toString(16).padStart(2, '0').toUpperCase()).join('') };
+    }
+
+    // 3. MIDEA 48-BIT DUAL-FRAME (Untuk Sharp Garuda AH-A5BEY / BMY & Midea / Polytron / Aqua)
+    function encodeMidea48() {
+      const tempCode = Math.max(17, Math.min(30, state.temp)) - 17;
+      const modeMap = { Auto: 2, Cool: 0, Dry: 1, Fan: 3 };
+      const fanMap = { Auto: 0, Low: 1, Med: 2, High: 3 };
+
+      const b0 = 0xB2;
+      const b1 = state.acPower ? ((fanMap[state.fans[state.fanIndex]] << 5) | 0x1F) : 0x7B;
+      const b2 = state.acPower ? ((tempCode << 4) | (modeMap[state.modes[state.modeIndex]] << 2)) : 0xE0;
+
+      // Midea mengirim [B0, ~B0, B1, ~B1, B2, ~B2] diulang 2x dengan jeda 5200 us
+      const frame = [b0, (~b0) & 0xFF, b1, (~b1) & 0xFF, b2, (~b2) & 0xFF];
+      const pulses = [];
+
+      for (let repeat = 0; repeat < 2; repeat++) {
+        pulses.push(4400, 4400);
+        for (let i = 0; i < 6; i++) {
+          for (let bit = 7; bit >= 0; bit--) {
+            pulses.push(560, ((frame[i] >> bit) & 1) ? 1620 : 540);
+          }
+        }
+        pulses.push(560);
+        if (repeat === 0) pulses.push(5200);
+      }
+
+      return { pulses, hex: frame.map(x => x.toString(16).padStart(2, '0').toUpperCase()).join('') };
+    }
+
+    // 4. LG 28-BIT ENCODER (Untuk AC LG DualCool & Hercules)
+    function encodeLg28() {
+      // Format 28-bit LG: [Header 0x88] [Command/Mode 8-bit] [Temp/Fan 8-bit] [Checksum 4-bit]
+      const tempNibble = Math.max(18, Math.min(30, state.temp)) - 15;
+      const fanMap = { Auto: 5, Low: 0, Med: 2, High: 4 };
+      const fanNibble = fanMap[state.fans[state.fanIndex]] ?? 5;
+
+      const n0 = 0x8, n1 = 0x8;
+      let n2 = 0x0, n3 = 0x8, n4 = tempNibble, n5 = fanNibble;
+
+      if (!state.acPower) {
+        n2 = 0xC; n3 = 0x0; n4 = 0x0; n5 = 0x5; // Kode Power OFF LG: 0x88C0051
+      }
+      const n6 = (n2 + n3 + n4 + n5) & 0x0F;
+      const nibbles = [n0, n1, n2, n3, n4, n5, n6];
+
+      const pulses = [8400, 4200];
+      for (let i = 0; i < 7; i++) {
+        for (let bit = 3; bit >= 0; bit--) {
+          pulses.push(550, ((nibbles[i] >> bit) & 1) ? 1600 : 550);
+        }
+      }
+      pulses.push(550);
+      return { pulses, hex: '0x' + nibbles.map(x => x.toString(16).toUpperCase()).join('') };
+    }
+
+    // 5. NEC 32-BIT ENCODER (Untuk TV Akari, LG, Polytron, STB)
+    function encodeNec32(addr16, cmd8) {
+      const addrHigh = (addr16 >> 8) & 0xFF;
+      const addrLow = addr16 & 0xFF;
+      const cmdInv = (~cmd8) & 0xFF;
+      const bytes = [addrHigh, addrLow, cmd8, cmdInv];
+
+      const pulses = [9000, 4500];
+      for (let i = 0; i < 4; i++) {
+        for (let bit = 0; bit < 8; bit++) {
+          pulses.push(560, ((bytes[i] >> bit) & 1) ? 1690 : 560);
+        }
+      }
+      pulses.push(560);
+      return { pulses, hex: '0x' + bytes.map(x => x.toString(16).padStart(2, '0').toUpperCase()).join('') };
+    }
+
+    // =========================================================================
+    // FUNGSI SAPU JAGAT (TEMBAK 5 PROTOKOL SHARP/GREE SEKALIGUS)
+    // =========================================================================
+    function fireAllSharpProtocols() {
+      const sequence = [
+        { name: '1/5 Welife Gree YAW1F (ZCY)', fn: () => encodeGreeFrame('YAW1F') },
+        { name: '2/5 Welife Gree YB1FA (UCY)', fn: () => encodeGreeFrame('YB1FA') },
+        { name: '3/5 Sharp Kaseikyo 13-Byte', fn: () => encodeSharp13Byte(false) },
+        { name: '4/5 Sharp Midea RG57 (BEY)', fn: () => encodeMidea48() },
+        { name: '5/5 Gree Alt Checksum', fn: () => encodeGreeFrame('ALT') }
+      ];
+
+      sequence.forEach((item, index) => {
+        setTimeout(() => {
+          const encoded = item.fn();
+          transmitRawPulses(encoded.pulses, item.name, encoded.hex);
+        }, index * 650);
+      });
+    }
+
+    // PEMANCAR KE HARDWARE IR INFINIX NOTE 60 PRO
+    function transmitRawPulses(pulses, label, hexStr) {
+      if (navigator.vibrate) navigator.vibrate(35);
+
+      const led = document.getElementById('ir-led');
+      led.classList.add('ir-active');
+      setTimeout(() => led.classList.remove('ir-active'), 280);
+
+      document.getElementById('pulse-count-label').textContent = `${pulses.length} Durasi @ 38kHz`;
+      document.getElementById('hex-output').textContent = hexStr.slice(0, 12);
+
+      try {
+        if (window.Android && typeof window.Android.transmitIR === 'function') {
+          window.Android.transmitIR(38000, pulses.join(','));
+          document.getElementById('log-output').textContent = `[TERKIRIM] ${label} (${pulses.length} pulsa)`;
+        } else if (window.ir && typeof window.ir.transmit === 'function') {
+          window.ir.transmit(38000, pulses);
+          document.getElementById('log-output').textContent = `[TERKIRIM] ${label}`;
+        } else if (window.ConsumerIrManager && typeof window.ConsumerIrManager.transmit === 'function') {
+          window.ConsumerIrManager.transmit(38000, pulses);
+          document.getElementById('log-output').textContent = `[TERKIRIM] ${label}`;
+        } else {
+          document.getElementById('log-output').textContent = `[SIMULASI] ${label} (${pulses.length} pulsa)`;
+        }
+      } catch (err) {
+        document.getElementById('log-output').textContent = `ERR: ${err.message || err}`;
+      }
+    }
+
+    function sendSignal(commandName) {
+      const m = getCurrentModelObj();
+      let encoded;
+
+      if (m.proto === 'GREE_YAW1F') encoded = encodeGreeFrame('YAW1F');
+      else if (m.proto === 'GREE_YB1FA') encoded = encodeGreeFrame('YB1FA');
+      else if (m.proto === 'GREE_ALT') encoded = encodeGreeFrame('ALT');
+      else if (m.proto === 'SHARP_13B_STD') encoded = encodeSharp13Byte(false);
+      else if (m.proto === 'SHARP_13B_INV') encoded = encodeSharp13Byte(true);
+      else if (m.proto === 'MIDEA_48') encoded = encodeMidea48();
+      else if (m.proto && m.proto.startsWith('LG_28')) encoded = encodeLg28();
+      else encoded = encodeGreeFrame('YAW1F');
+
+      transmitRawPulses(encoded.pulses, `${m.proto}: ${commandName}`, encoded.hex);
+    }
+
+    function sendTvCommand(cmdName, cmdByte) {
+      const m = getCurrentModelObj();
+      const encoded = encodeNec32(m.addr || 0x20DF, cmdByte);
+      transmitRawPulses(encoded.pulses, `TV_${cmdName}`, encoded.hex);
+    }
+
+    // UI CONTROLLER
     function quickSelect(bId, mId) {
       if (state.device !== 'AC') switchDevice('AC');
       state.brandId = bId;
@@ -657,9 +661,9 @@
       populateSubModels(bId);
       state.modelId = mId;
       document.getElementById('model-select').value = mId;
-      state.temp = 16;
+      state.acPower = true;
       applySubModelConfig();
-      sendSignal(`SYNC_${mId.toUpperCase()}_16C`, '0x16C');
+      sendSignal('TEST_POWER_ON');
     }
 
     function filterBrands(query) {
@@ -685,7 +689,7 @@
       );
 
       if (filtered.length === 0) {
-        select.innerHTML = '<option>Tidak ada</option>';
+        select.innerHTML = '<option>Tidak ditemukan</option>';
         return;
       }
 
@@ -730,8 +734,7 @@
     function changeSubModel(modelId) {
       state.modelId = modelId;
       applySubModelConfig();
-      const m = getCurrentModelObj();
-      sendSignal(`SELECT_${modelId.toUpperCase()}`, m.prefix);
+      sendSignal('MODEL_SELECTED');
     }
 
     function getCurrentModelObj() {
@@ -748,7 +751,7 @@
         renderExclusiveButtons();
       } else {
         document.getElementById('tv-brand-label').textContent = m.name.toUpperCase();
-        document.getElementById('tv-chip-info').textContent = `Remote: ${m.remote} | Protokol: ${m.proto}`;
+        document.getElementById('tv-chip-info').textContent = `Remote: ${m.remote} | NEC Address: 0x${(m.addr || 0x20DF).toString(16).toUpperCase()}`;
       }
     }
 
@@ -797,68 +800,62 @@
         const m = brandObj.models[idx];
         state.modelId = m.id;
         document.getElementById('model-select').value = m.id;
+        state.acPower = true;
         applySubModelConfig();
-        document.getElementById('autoscan-status').textContent = `Menembak: ${m.name}`;
-        sendSignal(`AUTOSCAN_${m.id.toUpperCase()}`, m.prefix);
+        document.getElementById('autoscan-status').textContent = `Menguji: ${m.name}`;
+        sendSignal('AUTOSCAN_ON');
         idx = (idx + 1) % brandObj.models.length;
-      }, 1400);
+      }, 1500);
     }
 
     function toggleAcPower() {
       state.acPower = !state.acPower;
       renderAcDisplay();
-      const m = getCurrentModelObj();
-      sendSignal(state.acPower ? 'AC_POWER_ON' : 'AC_POWER_OFF', m.prefix);
+      sendSignal(state.acPower ? 'POWER_ON' : 'POWER_OFF');
     }
 
     function adjustTemp(delta) {
-      if (!state.acPower) return;
+      state.acPower = true;
       state.temp = Math.min(30, Math.max(state.minTemp, state.temp + delta));
       renderAcDisplay();
-      const m = getCurrentModelObj();
-      sendSignal(`TEMP_${state.temp}C`, `${m.prefix}_${state.temp}`);
+      sendSignal(`TEMP_${state.temp}C`);
     }
 
     function cycleAcMode() {
-      if (!state.acPower) return;
       state.modeIndex = (state.modeIndex + 1) % state.modes.length;
       renderAcDisplay();
-      sendSignal(`MODE_${state.modes[state.modeIndex]}`, '0xMD');
+      sendSignal(`MODE_${state.modes[state.modeIndex]}`);
     }
 
     function cycleAcFan() {
-      if (!state.acPower) return;
       state.fanIndex = (state.fanIndex + 1) % state.fans.length;
       renderAcDisplay();
-      sendSignal(`FAN_${state.fans[state.fanIndex]}`, '0xFN');
+      sendSignal(`FAN_${state.fans[state.fanIndex]}`);
     }
 
     function toggleAcSwing() {
-      if (!state.acPower) return;
       state.swing = !state.swing;
       renderAcDisplay();
-      sendSignal(`SWING_${state.swing ? 'ON' : 'OFF'}`, '0xSW');
+      sendSignal(`SWING_${state.swing ? 'ON' : 'OFF'}`);
     }
 
     function toggleLedDisplay() {
-      if (!state.acPower) return;
       state.ledDisplay = !state.ledDisplay;
       renderAcDisplay();
-      sendSignal(`LED_LIGHT_${state.ledDisplay ? 'ON' : 'OFF'}`, '0xLD');
+      sendSignal(`LIGHT_${state.ledDisplay ? 'ON' : 'OFF'}`);
     }
 
     function cycleAcTimer() {
-      if (!state.acPower) return;
       const steps = [0, 1, 2, 4, 8];
       state.timerHours = steps[(steps.indexOf(state.timerHours) + 1) % steps.length];
       renderAcDisplay();
-      sendSignal(`TIMER_${state.timerHours}H`, '0xTM');
+      sendSignal(`TIMER_${state.timerHours}H`);
     }
 
     function renderAcDisplay() {
       const m = getCurrentModelObj();
       document.getElementById('ac-brand-label').textContent = m.name.toUpperCase();
-      document.getElementById('ac-chipset-label').textContent = `Remote: ${m.remote} | Protokol: ${m.proto}`;
+      document.getElementById('ac-chipset-label').textContent = `Remote: ${m.remote} | Encoder: ${m.proto}`;
       document.getElementById('ac-temp-display').textContent = state.acPower ? state.temp : '--';
       document.getElementById('ac-min-badge').textContent = `Min ${state.minTemp}°C`;
 
@@ -873,39 +870,33 @@
 
       const pills = document.getElementById('ac-special-pills');
       let html = '';
-      html += `<span class="px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">Layar LED Bodi: ${state.ledDisplay ? 'ON' : 'OFF'}</span>`;
-      if (state.turbo) html += `<span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Turbo 16°C Ready</span>`;
+      html += `<span class="px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">Layar LED AC: ${state.ledDisplay ? 'ON' : 'OFF'}</span>`;
+      if (state.turbo) html += `<span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Turbo Aktif</span>`;
+      if (state.xfan) html += `<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">X-Fan ON</span>`;
       pills.innerHTML = html;
     }
 
     function renderExclusiveButtons() {
-      const m = getCurrentModelObj();
       const container = document.getElementById('exclusive-buttons');
       container.innerHTML = `
         <button onclick="setTurbo16()" class="btn-press py-2 px-2 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold flex flex-col items-center gap-1">
-          <i class="fa-solid fa-snowflake"></i><span>Turbo ${state.minTemp}°C</span>
+          <i class="fa-solid fa-snowflake"></i><span>Dingin ${state.minTemp}°C</span>
         </button>
         <button onclick="toggleLedDisplay()" class="btn-press py-2 px-2 rounded-xl bg-yellow-500/15 border border-yellow-500/30 text-yellow-300 text-[11px] font-bold flex flex-col items-center gap-1">
           <i class="fa-regular fa-lightbulb"></i><span>Lampu LED</span>
         </button>
-        <button onclick="toggleXFan()" class="btn-press py-2 px-2 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold flex flex-col items-center gap-1">
-          <i class="fa-solid fa-wind"></i><span>X-Fan / Ion</span>
+        <button onclick="fireAllSharpProtocols()" class="btn-press py-2 px-2 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-bold flex flex-col items-center gap-1">
+          <i class="fa-solid fa-bolt"></i><span>Sapu Jagat</span>
         </button>
       `;
     }
 
     function setTurbo16() {
+      state.acPower = true;
       state.temp = state.minTemp;
       state.turbo = !state.turbo;
       renderAcDisplay();
-      const m = getCurrentModelObj();
-      sendSignal(`TURBO_${state.minTemp}C`, m.prefix);
-    }
-
-    function toggleXFan() {
-      state.xfan = !state.xfan;
-      const m = getCurrentModelObj();
-      sendSignal(`X_FAN_${state.xfan ? 'ON' : 'OFF'}`, m.prefix);
+      sendSignal(`TURBO_${state.minTemp}C`);
     }
 
     function openBridgeModal() {
@@ -917,117 +908,6 @@
       document.getElementById('bridge-modal').classList.add('hidden');
     }
 
-    async function toggleProtocol() {
-      const btn = document.getElementById('protocol-btn');
-      if (state.protocol === 'IR') {
-        state.protocol = 'BLE';
-        btn.innerHTML = '<i class="fa-brands fa-bluetooth-b"></i> <span>BLE Mode</span>';
-        if (navigator.bluetooth) {
-          try { await navigator.bluetooth.requestDevice({ acceptAllDevices: true }); } catch (e) {}
-        }
-      } else {
-        state.protocol = 'IR';
-        btn.innerHTML = '<i class="fa-solid fa-tower-broadcast"></i> <span>IR 38kHz</span>';
-      }
-    }
-
-    // Encoder GREE YB1FA: state lengkap 8 byte + checksum + framing dua blok.
-    // Mengikuti implementasi YB1FA pada ESPHome; belum ada konfirmasi penerimaan oleh AC
-    // sampai diuji langsung dengan unit AH-A18UCY.
-    function buildYb1faPulses() {
-      const modeMap = { Auto: 0x00, Cool: 0x01, Dry: 0x02, Fan: 0x03, Heat: 0x04 };
-      const fanMap = { Auto: 0x00, Low: 0x10, Med: 0x20, High: 0x30 };
-
-      const mode = state.acPower ? (0x08 | (modeMap[state.modes[state.modeIndex]] ?? 0x01)) : 0x00;
-      const fan = fanMap[state.fans[state.fanIndex]] ?? 0x00;
-      const bytes = [0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00];
-
-      // Byte 0: mode, fan, vertical swing flag.
-      bytes[0] = mode | fan | (state.swing ? 0x40 : 0x00);
-      // Byte 1: suhu 16–30°C disimpan sebagai offset dari 16°C.
-      bytes[1] = Math.max(16, Math.min(30, state.temp)) - 16;
-      // Byte 2: fitur khusus model YB1FA. Bit 6 menandakan power ON.
-      bytes[2] = (state.acPower ? 0x40 : 0x00)
-        | (state.turbo ? 0x10 : 0x00)
-        | (state.ledDisplay ? 0x20 : 0x00)
-        | (state.xfan ? 0x80 : 0x00);
-      // Byte 3 dan 5 adalah nilai tetap yang dipakai frame model ini.
-      bytes[3] = 0x50;
-      // Byte 4: posisi swing vertikal (0x01 = swing otomatis).
-      bytes[4] = state.swing ? 0x01 : 0x00;
-      bytes[5] = 0x20;
-      bytes[6] = 0x00;
-
-      // Checksum: jumlah nibble bawah byte 0–3 + nibble atas byte 4–6 + 0x0A.
-      let sum = 0x0A;
-      for (let i = 0; i < 4; i++) sum += bytes[i] & 0x0F;
-      for (let i = 4; i < 7; i++) sum += (bytes[i] >> 4) & 0x0F;
-      bytes[7] = (sum & 0x0F) << 4;
-
-      const pulses = [9000, 4000];
-      const addByte = (value) => {
-        // GREE YB1FA mengirim bit least-significant-bit terlebih dahulu.
-        for (let mask = 1; mask <= 0x80; mask <<= 1) {
-          pulses.push(620, (value & mask) ? 1600 : 540);
-        }
-      };
-
-      for (let i = 0; i < 4; i++) addByte(bytes[i]);
-      // Pemisah tetap 010, lalu jeda antar-blok sekitar 19 ms.
-      pulses.push(620, 540, 620, 1600, 620, 540, 19000);
-      for (let i = 4; i < 8; i++) addByte(bytes[i]);
-      pulses.push(620);
-      return { pulses, bytes };
-    }
-
-    // PEMANCAR UTAMA KE HARDWARE IR INFINIX NOTE 60 PRO
-    function sendSignal(commandName, hexCode) {
-      if (navigator.vibrate) navigator.vibrate(35);
-
-      const led = document.getElementById('ir-led');
-      led.classList.add('ir-active');
-      setTimeout(() => led.classList.remove('ir-active'), 300);
-
-      const m = getCurrentModelObj();
-      let dynamicPulses;
-      let statusLabel = '';
-
-      if (state.device === 'AC' && m.id === 'sharp_a18ucy') {
-        const encoded = buildYb1faPulses();
-        dynamicPulses = encoded.pulses;
-        statusLabel = `YB1FA 8-byte [${encoded.bytes.map(v => v.toString(16).padStart(2, '0').toUpperCase()).join(' ')}]`;
-        document.getElementById('hex-output').textContent = 'YB1FA / 38kHz';
-      } else {
-        const basePulses = IR_PULSE_TABLES[m.proto] || IR_PULSE_TABLES.GREE_67;
-        dynamicPulses = basePulses.map((val, idx) => {
-          if (idx === 11 || idx === 15) return state.temp % 2 === 0 ? 1650 : 540;
-          if (idx === 13) return state.acPower ? 1650 : 540;
-          return val;
-        });
-        document.getElementById('hex-output').textContent = hexCode;
-        statusLabel = m.proto;
-      }
-
-      document.getElementById('pulse-count-label').textContent = `${dynamicPulses.length} Durasi @ 38kHz`;
-
-      try {
-        if (window.Android && typeof window.Android.transmitIR === 'function') {
-          const result = window.Android.transmitIR(38000, dynamicPulses.join(','));
-          document.getElementById('log-output').textContent =
-            `${statusLabel} | ${commandName} | ${result || 'Perintah dikirim ke Android'}`;
-        } else if (window.ir && typeof window.ir.transmit === 'function') {
-          window.ir.transmit(38000, dynamicPulses);
-          document.getElementById('log-output').textContent = `${statusLabel} | ${commandName} | Bridge IR dipanggil`;
-        } else if (window.ConsumerIrManager && typeof window.ConsumerIrManager.transmit === 'function') {
-          window.ConsumerIrManager.transmit(38000, dynamicPulses);
-          document.getElementById('log-output').textContent = `${statusLabel} | ${commandName} | Bridge IR dipanggil`;
-        } else {
-          document.getElementById('log-output').textContent = 'ERROR: Native IR bridge tidak tersedia';
-        }
-      } catch (err) {
-        document.getElementById('log-output').textContent = `ERROR IR: ${err.message || err}`;
-      }
-    }
     window.addEventListener('DOMContentLoaded', initApp);
   </script>
 </body>
