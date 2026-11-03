@@ -298,6 +298,7 @@
           id: 'sharp',
           name: 'AC Sharp (8 Seri Lengkap)',
           models: [
+            { id: 'sharp_a18ucy', name: '0. Sharp AH-A18UCY (Remote YB1FA - Profil khusus)', remote: 'YB1FA', minTemp: 16, prefix: 'YB1FA', proto: 'GREE_YB1FA', type: 'yb1fa' },
             { id: 'sharp_zcy', name: '1. Sharp AH-A5ZCY / A9ZCY / ZY (LED 16°C - Gree YAP1F)', remote: 'YAP1F (Gree OEM)', minTemp: 16, prefix: '0x90AF', proto: 'GREE_67', type: 'zcy_led' },
             { id: 'sharp_bey', name: '2. Sharp AH-A5BEY / BMY (Garuda LED 16°C - Midea OEM)', remote: 'CRMC-B001 (Midea)', minTemp: 16, prefix: '0xB24D', proto: 'MIDEA_48', type: 'zcy_led' },
             { id: 'sharp_ucy', name: '3. Sharp AH-A5UCY / A9UCY / SAY (Standar 18°C)', remote: 'CRMC-A907JBEZ', minTemp: 18, prefix: '0xAA5A', proto: 'SHARP_104', type: 'std_sharp' },
@@ -597,7 +598,7 @@
     let state = {
       device: 'AC',
       brandId: 'sharp',
-      modelId: 'sharp_zcy',
+      modelId: 'sharp_a18ucy',
       protocol: 'IR',
       acPower: true,
       temp: 16,
@@ -609,7 +610,8 @@
       swing: true,
       ledDisplay: true,
       timerHours: 0,
-      turbo: true,
+      turbo: false,
+      xfan: false,
       wattControl: 100,
       autoScanTimer: null
     };
@@ -617,35 +619,33 @@
     function initApp() {
       checkNativeBridge();
       populateBrands('');
+      // Pilih profil khusus sesuai label AC pengguna: Sharp AH-A18UCY / remote YB1FA.
+      state.brandId = 'sharp';
+      document.getElementById('brand-select').value = 'sharp';
+      populateSubModels('sharp');
+      state.modelId = 'sharp_a18ucy';
+      document.getElementById('model-select').value = 'sharp_a18ucy';
+      applySubModelConfig();
     }
 
     function checkNativeBridge() {
+      const hasBridge = !!(
+        (window.Android && typeof window.Android.transmitIR === 'function') ||
+        (window.ir && typeof window.ir.transmit === 'function') ||
+        (window.ConsumerIrManager && typeof window.ConsumerIrManager.transmit === 'function')
+      );
       const badge = document.getElementById('infinix-badge');
       const statusText = document.getElementById('bridge-status-text');
 
-      if (window.Android && typeof window.Android.getIrStatus === 'function') {
-        try {
-          const result = window.Android.getIrStatus();
-          if (result && result.startsWith('READY:')) {
-            badge.textContent = 'IR HARDWARE: TERDETEKSI';
-            badge.className = 'text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
-            statusText.textContent = result + ' Belum menguji pancaran atau respons AC.';
-            statusText.className = 'text-emerald-400';
-          } else {
-            badge.textContent = 'IR HARDWARE: BERMASALAH';
-            badge.className = 'text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/40';
-            statusText.textContent = result || 'Status IR tidak dapat dibaca.';
-            statusText.className = 'text-red-300';
-          }
-        } catch (err) {
-          badge.textContent = 'IR STATUS: ERROR';
-          statusText.textContent = 'Gagal membaca status IR: ' + err.message;
-          statusText.className = 'text-red-300';
-        }
+      if (hasBridge) {
+        badge.textContent = 'INFINIX IR: NATIVE CONNECTED';
+        badge.className = 'text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+        statusText.textContent = 'AKTIF: ConsumerIrManager Terhubung ke Lampu IR Infinix Note 60 Pro!';
+        statusText.className = 'text-emerald-400';
       } else {
-        badge.textContent = 'IR BRIDGE: TIDAK TERHUBUNG';
+        badge.textContent = 'INFINIX IR (WEBVIEW MODE)';
         badge.className = 'text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40';
-        statusText.textContent = 'Bridge Android tidak ditemukan. Pastikan APK terbaru terpasang.';
+        statusText.textContent = 'WebView Terdeteksi: Butuh Native Bridge APK agar lampu IR Infinix menyala.';
         statusText.className = 'text-amber-300';
       }
     }
@@ -888,7 +888,7 @@
         <button onclick="toggleLedDisplay()" class="btn-press py-2 px-2 rounded-xl bg-yellow-500/15 border border-yellow-500/30 text-yellow-300 text-[11px] font-bold flex flex-col items-center gap-1">
           <i class="fa-regular fa-lightbulb"></i><span>Lampu LED</span>
         </button>
-        <button onclick="sendSignal('X_FAN_CLEAN', m.prefix)" class="btn-press py-2 px-2 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold flex flex-col items-center gap-1">
+        <button onclick="toggleXFan()" class="btn-press py-2 px-2 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold flex flex-col items-center gap-1">
           <i class="fa-solid fa-wind"></i><span>X-Fan / Ion</span>
         </button>
       `;
@@ -900,6 +900,12 @@
       renderAcDisplay();
       const m = getCurrentModelObj();
       sendSignal(`TURBO_${state.minTemp}C`, m.prefix);
+    }
+
+    function toggleXFan() {
+      state.xfan = !state.xfan;
+      const m = getCurrentModelObj();
+      sendSignal(`X_FAN_${state.xfan ? 'ON' : 'OFF'}`, m.prefix);
     }
 
     function openBridgeModal() {
@@ -925,6 +931,55 @@
       }
     }
 
+    // Encoder GREE YB1FA: state lengkap 8 byte + checksum + framing dua blok.
+    // Mengikuti implementasi YB1FA pada ESPHome; belum ada konfirmasi penerimaan oleh AC
+    // sampai diuji langsung dengan unit AH-A18UCY.
+    function buildYb1faPulses() {
+      const modeMap = { Auto: 0x00, Cool: 0x01, Dry: 0x02, Fan: 0x03, Heat: 0x04 };
+      const fanMap = { Auto: 0x00, Low: 0x10, Med: 0x20, High: 0x30 };
+
+      const mode = state.acPower ? (0x08 | (modeMap[state.modes[state.modeIndex]] ?? 0x01)) : 0x00;
+      const fan = fanMap[state.fans[state.fanIndex]] ?? 0x00;
+      const bytes = [0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00];
+
+      // Byte 0: mode, fan, vertical swing flag.
+      bytes[0] = mode | fan | (state.swing ? 0x40 : 0x00);
+      // Byte 1: suhu 16–30°C disimpan sebagai offset dari 16°C.
+      bytes[1] = Math.max(16, Math.min(30, state.temp)) - 16;
+      // Byte 2: fitur khusus model YB1FA. Bit 6 menandakan power ON.
+      bytes[2] = (state.acPower ? 0x40 : 0x00)
+        | (state.turbo ? 0x10 : 0x00)
+        | (state.ledDisplay ? 0x20 : 0x00)
+        | (state.xfan ? 0x80 : 0x00);
+      // Byte 3 dan 5 adalah nilai tetap yang dipakai frame model ini.
+      bytes[3] = 0x50;
+      // Byte 4: posisi swing vertikal (0x01 = swing otomatis).
+      bytes[4] = state.swing ? 0x01 : 0x00;
+      bytes[5] = 0x20;
+      bytes[6] = 0x00;
+
+      // Checksum: jumlah nibble bawah byte 0–3 + nibble atas byte 4–6 + 0x0A.
+      let sum = 0x0A;
+      for (let i = 0; i < 4; i++) sum += bytes[i] & 0x0F;
+      for (let i = 4; i < 7; i++) sum += (bytes[i] >> 4) & 0x0F;
+      bytes[7] = (sum & 0x0F) << 4;
+
+      const pulses = [9000, 4000];
+      const addByte = (value) => {
+        // GREE YB1FA mengirim bit least-significant-bit terlebih dahulu.
+        for (let mask = 1; mask <= 0x80; mask <<= 1) {
+          pulses.push(620, (value & mask) ? 1600 : 540);
+        }
+      };
+
+      for (let i = 0; i < 4; i++) addByte(bytes[i]);
+      // Pemisah tetap 010, lalu jeda antar-blok sekitar 19 ms.
+      pulses.push(620, 540, 620, 1600, 620, 540, 19000);
+      for (let i = 4; i < 8; i++) addByte(bytes[i]);
+      pulses.push(620);
+      return { pulses, bytes };
+    }
+
     // PEMANCAR UTAMA KE HARDWARE IR INFINIX NOTE 60 PRO
     function sendSignal(commandName, hexCode) {
       if (navigator.vibrate) navigator.vibrate(35);
@@ -934,57 +989,45 @@
       setTimeout(() => led.classList.remove('ir-active'), 300);
 
       const m = getCurrentModelObj();
-      const basePulses = IR_PULSE_TABLES[m.proto] || IR_PULSE_TABLES.GREE_67;
+      let dynamicPulses;
+      let statusLabel = '';
 
-      // Modifikasi pulsa sesuai suhu & power agar sinyal unik per tombol
-      const dynamicPulses = basePulses.map((val, idx) => {
-        if (idx === 11 || idx === 15) return state.temp % 2 === 0 ? 1650 : 540;
-        if (idx === 13) return state.acPower ? 1650 : 540;
-        return val;
-      });
-
-      document.getElementById('pulse-count-label').textContent = `${dynamicPulses.length} Pulsa @ 38kHz`;
-
-      // Kirim melalui JavaScriptInterface dan tampilkan hasil yang dikembalikan Java.
-      const logOutput = document.getElementById('log-output');
-      const statusText = document.getElementById('bridge-status-text');
-      const badge = document.getElementById('infinix-badge');
-
-      if (state.protocol !== 'IR') {
-        logOutput.textContent = 'Mode BLE dipilih; belum ada pengiriman IR.';
-        return;
+      if (state.device === 'AC' && m.id === 'sharp_a18ucy') {
+        const encoded = buildYb1faPulses();
+        dynamicPulses = encoded.pulses;
+        statusLabel = `YB1FA 8-byte [${encoded.bytes.map(v => v.toString(16).padStart(2, '0').toUpperCase()).join(' ')}]`;
+        document.getElementById('hex-output').textContent = 'YB1FA / 38kHz';
+      } else {
+        const basePulses = IR_PULSE_TABLES[m.proto] || IR_PULSE_TABLES.GREE_67;
+        dynamicPulses = basePulses.map((val, idx) => {
+          if (idx === 11 || idx === 15) return state.temp % 2 === 0 ? 1650 : 540;
+          if (idx === 13) return state.acPower ? 1650 : 540;
+          return val;
+        });
+        document.getElementById('hex-output').textContent = hexCode;
+        statusLabel = m.proto;
       }
 
-      if (!window.Android || typeof window.Android.transmitIR !== 'function') {
-        logOutput.textContent = 'GAGAL: Native IR bridge tidak terhubung.';
-        statusText.textContent = 'Tidak ada perintah yang dikirim. Periksa APK dan JavaScript bridge.';
-        statusText.className = 'text-red-300';
-        badge.textContent = 'IR BRIDGE: ERROR';
-        return;
-      }
+      document.getElementById('pulse-count-label').textContent = `${dynamicPulses.length} Durasi @ 38kHz`;
 
       try {
-        const result = window.Android.transmitIR(38000, dynamicPulses.join(','));
-        logOutput.textContent = result || 'Android tidak mengembalikan status.';
-        if (result && result.startsWith('OK:')) {
-          statusText.textContent = result;
-          statusText.className = 'text-emerald-400';
-          badge.textContent = 'PERINTAH DITERIMA ANDROID';
+        if (window.Android && typeof window.Android.transmitIR === 'function') {
+          const result = window.Android.transmitIR(38000, dynamicPulses.join(','));
+          document.getElementById('log-output').textContent =
+            `${statusLabel} | ${commandName} | ${result || 'Perintah dikirim ke Android'}`;
+        } else if (window.ir && typeof window.ir.transmit === 'function') {
+          window.ir.transmit(38000, dynamicPulses);
+          document.getElementById('log-output').textContent = `${statusLabel} | ${commandName} | Bridge IR dipanggil`;
+        } else if (window.ConsumerIrManager && typeof window.ConsumerIrManager.transmit === 'function') {
+          window.ConsumerIrManager.transmit(38000, dynamicPulses);
+          document.getElementById('log-output').textContent = `${statusLabel} | ${commandName} | Bridge IR dipanggil`;
         } else {
-          statusText.textContent = result || 'Pengiriman gagal tanpa detail.';
-          statusText.className = 'text-red-300';
-          badge.textContent = 'PENGIRIMAN IR GAGAL';
+          document.getElementById('log-output').textContent = 'ERROR: Native IR bridge tidak tersedia';
         }
       } catch (err) {
-        logOutput.textContent = 'ERROR: ' + (err.message || String(err));
-        statusText.textContent = 'Kesalahan saat memanggil Android.transmitIR().';
-        statusText.className = 'text-red-300';
-        badge.textContent = 'PENGIRIMAN IR GAGAL';
+        document.getElementById('log-output').textContent = `ERROR IR: ${err.message || err}`;
       }
-
-      document.getElementById('hex-output').textContent = hexCode;
     }
-
     window.addEventListener('DOMContentLoaded', initApp);
   </script>
 </body>
